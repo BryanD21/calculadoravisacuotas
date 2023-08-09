@@ -13,24 +13,88 @@
     <label for="precio">Precio del Producto:</label>
     <input type="number" id="precio" placeholder="Precio" step="0.01"><br>
     
-    <label for="porcentaje">Porcentaje Adicional Visa Cuotas:</label>
-    <input type="number" id="porcentaje" placeholder="Porcentaje" step="0.01"><br>
+    <label for="cuotas">Número de Visa Cuotas:</label>
+    <select id="cuotas" onchange="actualizarPrecioTotal()">
+        <option value="2">2 cuotas</option>
+        <option value="3">3 cuotas</option>
+        <option value="6">6 cuotas</option>
+        <option value="10">10 cuotas</option>
+        <option value="12">12 cuotas</option>
+        <option value="15">15 cuotas</option>
+        <option value="18">18 cuotas</option>
+        <option value="24">24 cuotas</option>
+        <option value="36">36 cuotas</option>
+    </select><br>
     
     <button onclick="calcularPrecioTotal()">Calcular Precio Total</button>
     
     <p id="resultado"></p>
     
+    <h2>IVA</h2>
+    <div class="iva">
+        <p>El Impuesto al Valor Agregado (IVA) aplicado al precio total es:</p>
+        <p id="ivaResultado"></p>
+    </div>
+    
+    <h2>Total con Visa Cuotas e IVA</h2>
+    <div class="total" style="margin: 10px;">
+        <p>El total con Visa Cuotas e IVA es:</p>
+        <p id="totalResultado"></p>
+    </div>
+    
     <script>
         function calcularPrecioTotal() {
             var precio = parseFloat(document.getElementById("precio").value);
-            var porcentaje = parseFloat(document.getElementById("porcentaje").value);
+            var cuotas = parseInt(document.getElementById("cuotas").value);
+            var porcentajeExtra = 0;
             
-            if (!isNaN(precio) && !isNaN(porcentaje)) {
-                var precioTotal = precio + (precio * porcentaje / 100);
-                document.getElementById("resultado").innerHTML = "Precio Total con Visa Cuotas: Q" + precioTotal.toFixed(2);
-            } else {
-                document.getElementById("resultado").innerHTML = "Por favor, ingrese valores válidos.";
+            switch (cuotas) {
+                case 2:
+                    porcentajeExtra = 0.0525;
+                    break;
+                case 3:
+                    porcentajeExtra = 0.0575;
+                    break;
+                case 6:
+                    porcentajeExtra = 0.07;
+                    break;
+                case 10:
+                    porcentajeExtra = 0.0725;
+                    break;
+                case 12:
+                    porcentajeExtra = 0.08;
+                    break;
+                case 15:
+                    porcentajeExtra = 0.1;
+                    break;
+                case 18:
+                    porcentajeExtra = 0.12;
+                    break;
+                case 24:
+                    porcentajeExtra = 0.125;
+                    break;
+                case 36:
+                    porcentajeExtra = 0.13;
+                    break;
+                default:
+                    porcentajeExtra = 0.05;
+                    break;
             }
+            
+            var precioTotal = precio * (1 + porcentajeExtra);
+            var iva = precioTotal * 0.05; // 5% extra de impuesto para el IVA
+            var totalConIva = precioTotal + iva;
+            var precioPorCuota = precioTotal / cuotas;
+            
+            document.getElementById("resultado").innerHTML = "Precio Total con Visa Cuotas: Q" + precioTotal.toFixed(2);
+            
+            // Mostrar el IVA y el Total con IVA
+            document.getElementById("ivaResultado").innerHTML = "Q" + iva.toFixed(2);
+            document.getElementById("totalResultado").innerHTML = "Q" + totalConIva.toFixed(2);
+        }
+        
+        function actualizarPrecioTotal() {
+            calcularPrecioTotal();
         }
     </script>
 </body>

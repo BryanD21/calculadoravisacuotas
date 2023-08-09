@@ -6,7 +6,11 @@
     <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
-    <h1 class="titulo">LENSOR</h1>
+    <div class="logo-container">
+   	 <img src="Lensor-transparente.png" alt="Logo de Mi Empresa" class="logo">
+    </div>
+
+    
     
     <h2>Calculadora de Porcentaje - Visa Cuotas</h2>
     
@@ -40,6 +44,14 @@
     <div class="total" style="margin: 10px;">
         <p>El total con Visa Cuotas e IVA es:</p>
         <p id="totalResultado"></p>
+    </div>
+    
+    
+    <div class="cuotas-container">
+        <div class="cuotas">
+            <p>Desglose del total en cuotas:</p>
+            <ul id="desgloseCuotas"></ul>
+        </div>
     </div>
     
     <script>
@@ -91,6 +103,14 @@
             // Mostrar el IVA y el Total con IVA
             document.getElementById("ivaResultado").innerHTML = "Q" + iva.toFixed(2);
             document.getElementById("totalResultado").innerHTML = "Q" + totalConIva.toFixed(2);
+            
+            // Calcular y mostrar el desglose de cuotas
+            var desgloseCuotasHtml = "";
+            for (var i = 1; i <= cuotas; i++) {
+                var cuotaConIva = precioPorCuota + (iva / cuotas);
+                desgloseCuotasHtml += "<li>Cuota " + i + ": Q" + cuotaConIva.toFixed(2) + "</li>";
+            }
+            document.getElementById("desgloseCuotas").innerHTML = desgloseCuotasHtml;
         }
         
         function actualizarPrecioTotal() {

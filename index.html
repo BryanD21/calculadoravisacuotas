@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculadora de Porcentaje - Visa Cuotas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <h1>LENSOR</h1>
+    
+    <h2>Calculadora de Porcentaje - Visa Cuotas</h2>
+    
+    <label for="precio">Precio del Producto:</label>
+    <input type="number" id="precio" placeholder="Precio" step="0.01"><br>
+    
+    <label for="porcentaje">Porcentaje Adicional Visa Cuotas:</label>
+    <input type="number" id="porcentaje" placeholder="Porcentaje" step="0.01"><br>
+    
+    <button onclick="calcularPrecioTotal()">Calcular Precio Total</button>
+    
+    <p id="resultado"></p>
+    
+    <script>
+        function calcularPrecioTotal() {
+            var precio = parseFloat(document.getElementById("precio").value);
+            var porcentaje = parseFloat(document.getElementById("porcentaje").value);
+            
+            if (!isNaN(precio) && !isNaN(porcentaje)) {
+                var precioTotal = precio + (precio * porcentaje / 100);
+                document.getElementById("resultado").innerHTML = "Precio Total con Visa Cuotas: Q" + precioTotal.toFixed(2);
+            } else {
+                document.getElementById("resultado").innerHTML = "Por favor, ingrese valores válidos.";
+            }
+        }
+    </script>
+</body>
+</html>
